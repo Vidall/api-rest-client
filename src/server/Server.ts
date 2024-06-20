@@ -1,12 +1,13 @@
 import express from 'express';
 
-const app = express();
+import 'dotenv/config';
+import './shared/services/TranslationsYup';
 
+import { router } from './routes';
 
-app.get('/', (req, res) => {
-    return res.send('ola dev')
-})
+const server = express();
 
-app.listen(3000, () => {
-    console.log('Backend executando')
-})
+server.use(express.json());
+server.use(router);
+
+export { server };
