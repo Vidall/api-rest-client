@@ -8,7 +8,6 @@ interface ICidade {
   nome: string
 }
 
-
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
 export const createValidator = validation((getSchema) => ({
@@ -16,7 +15,6 @@ export const createValidator = validation((getSchema) => ({
     nome: yup.string().required().min(3),
   })),
 }));
-
 
 // create função para criar a cidade
 export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {//a tipagem do 2° param é para

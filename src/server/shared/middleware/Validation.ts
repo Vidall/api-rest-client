@@ -16,11 +16,8 @@ type TGetAllSchemas = (getSchema: TGetSchema) => Partial<TAllSchemas>
 
 type TValidation = (getAllSchemas: TGetAllSchemas) => RequestHandler ;
 
-
-
 export const validation: TValidation = (getAllSchemas) => async (req, res, next) => {
   const schemas = getAllSchemas((schema) => schema);
-
 
   const errorsResult: Record<string, Record<string, string>> = {};
 
@@ -39,7 +36,6 @@ export const validation: TValidation = (getAllSchemas) => async (req, res, next)
       errorsResult[key] = errors;
     }
   });
-
 
   if (Object.entries(errorsResult).length === 0) {
     return next();

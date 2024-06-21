@@ -10,7 +10,6 @@ interface IQueryProps {
   filter?: string
 }
 
-
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
 export const getAllValidator = validation((getSchema) => ({
@@ -21,13 +20,11 @@ export const getAllValidator = validation((getSchema) => ({
   })),
 }));
 
-
 // create função para pegar todas cidades
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {//a tipagem do 2° param é para
 
   res.setHeader('access-control-expose-headers', 'x-total-count');
   res.setHeader('x-total-count', 1);
-
 
   return res.status(StatusCodes.OK).json({
     id: 1,

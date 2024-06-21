@@ -12,7 +12,6 @@ interface IBodyProps {
   nome: string
 }
 
-
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
 export const UpdateByIdValidator = validation((getSchema) => ({
@@ -23,7 +22,6 @@ export const UpdateByIdValidator = validation((getSchema) => ({
     nome: yup.string().required().min(3),
   }))
 }));
-
 
 // create função para pegar todas cidades
 export const updateById = async (req: Request<IParamProps, {}, {}>, res: Response) => {//a tipagem do 2° param é para
