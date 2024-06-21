@@ -8,7 +8,6 @@ interface IParamProps {
   id?: number
 }
 
-
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
 export const deleteByIdValidator = validation((getSchema) => ({
@@ -16,7 +15,6 @@ export const deleteByIdValidator = validation((getSchema) => ({
     id: yup.number().integer().required().moreThan(0),
   })),
 }));
-
 
 // create função para pegar todas cidades
 export const deleteById = async (req: Request<IParamProps, {}, {}>, res: Response) => {//a tipagem do 2° param é para
