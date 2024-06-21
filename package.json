@@ -4,9 +4,13 @@
   "main": "index.js",
   "scripts": {
     "start": "yarn ts-node-dev ./src/index.ts",
-    "test": "jest",
     "production": "node ./build/index.js",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "knex:migrate": "knex --knexfile ./src/server/database/knex/Enviroment.ts migrate:latest",
+    "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Enviroment.ts migrate:rollback-all",
+    "knex:rollback": "knex --knexfile ./src/server/database/knex/Enviroment.ts migrate:rollback",
+    "knex:seed": "knex --knexfile ./src/server/database/knex/Enviroment.ts seed:run",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +34,7 @@
     "@types/supertest": "^6.0.2",
     "eslint": "^8.57.0",
     "globals": "^15.4.0",
-    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "supertest": "^7.0.0",
     "typescript-eslint": "^7.13.0"
   },

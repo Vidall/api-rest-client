@@ -3,6 +3,7 @@ import path from 'path';
 
 /*eslint-disable*/
 
+// Ambiente de desenvolvimentos
 export const development: Knex.Config = {
   client: 'sqlite',
   useNullAsDefault: true,
@@ -24,12 +25,14 @@ export const development: Knex.Config = {
   }
 };
 
-//quando desliga o servidor ele zera tudos dados
+//Ambniente de testes - quando desliga o servidor ele zera tudos dados
 export const test: Knex.Config = {
   ...development,
   connection: 'memory' // salva o dados em momoria
 };
 
+
+//Ambiente de produção
 export const production: Knex.Config = {
   ...development,
 };
