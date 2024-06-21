@@ -14,7 +14,7 @@ export default [
         'error',
         2,
         {
-          "SwitchCase": 1
+          'SwitchCase': 1
         }
       ],
       'linebreak-style': [
