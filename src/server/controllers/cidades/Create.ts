@@ -3,15 +3,15 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from 'http-status-codes';
+import knex from 'knex';
+import { ICidade } from '../../database/models';
 
-interface ICidade {
-  nome: string
-}
+interface IBodyProps extends Omit<ICidade, 'id'> {}// on Omit permite omitir algum atributo na extensão
 
-/*yup.Schema vincula a interface ICidade com o bodyValidation*/
+/*yup.Schema vincula a interface IBodyProps com o bodyValidation*/
 /*schema de validação com a lib yup*/
 export const createValidator = validation((getSchema) => ({
-  body: getSchema<ICidade>(yup.object().shape({
+  body: getSchema<IBodyProps>(yup.object().shape({
     nome: yup.string().required().min(3),
   })),
 }));
@@ -19,7 +19,7 @@ export const createValidator = validation((getSchema) => ({
 // create função para criar a cidade
 export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {//a tipagem do 2° param é para
 
-  console.log(req.body);
+  knex('cidade').insert({});
 
   return res.status(StatusCodes.CREATED).json(1);
 };
