@@ -5,7 +5,7 @@ import path from 'path';
 
 // Ambiente de desenvolvimentos
 export const development: Knex.Config = {
-  client: 'sqlite',
+  client: 'sqlite3',
   useNullAsDefault: true,
   connection: {
     filename: path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite')
@@ -19,7 +19,7 @@ export const development: Knex.Config = {
   // pool especifico para o sqlite
   pool: {
     afterCreate: (connection: any, done: Function) => {
-      connection.run('PRAGMA forign_keys = ON'); // habilitar vinculo de chave estrangeira
+      connection.run('PRAGMA foreign_keys = ON'); // habilitar vinculo de chave estrangeira
       done(); // termino de configurar
     }
   }
@@ -28,7 +28,7 @@ export const development: Knex.Config = {
 //Ambniente de testes - quando desliga o servidor ele zera tudos dados
 export const test: Knex.Config = {
   ...development,
-  connection: 'memory' // salva o dados em momoria
+  connection: ':memory:' // salva o dados em momoria
 };
 
 

@@ -1,4 +1,4 @@
-import knex from 'knex';
+import Knex from 'knex';
 
 import {development, production, test} from './Enviroment';
 
@@ -15,4 +15,4 @@ const getEnviroment = () => {
   }
 };
 
-export const Knex = knex(getEnviroment());
+export const knex = Knex(getEnviroment());
