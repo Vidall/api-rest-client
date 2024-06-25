@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from 'http-status-codes';
 import { ICidade } from '../../database/models';
+import { CidadesProvider } from '../../database/providers/cidades';
 
 interface IParamProps {
   id?: number
@@ -23,16 +24,24 @@ export const UpdateByIdValidator = validation((getSchema) => ({
 }));
 
 // create função para pegar todas cidades
-export const updateById = async (req: Request<IParamProps, {}, {}>, res: Response) => {//a tipagem do 2° param é para
+export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {//a tipagem do 2° param é para
+  if (!req.params.id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parametro id precisa ser informado'
+      }
+    });
+  }
 
-  if (Number(req.params.id) === 9999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: {
-      default: 'Cidade não localizada'
-    }
-  });
+  const result = await CidadesProvider.updateByid(req.params.id, req.body);
 
-  return res.status(StatusCodes.ACCEPTED).json({
-    id: req.params.id,
-    nome: 'Angra'
-  });
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 };

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from 'http-status-codes';
+import { CidadesProvider } from '../../database/providers/cidades';
 
 interface IParamProps {
   id?: number
@@ -19,14 +20,17 @@ export const GetByIdValidator = validation((getSchema) => ({
 // create função para pegar todas cidades
 export const getById = async (req: Request<IParamProps, {}, {}>, res: Response) => {//a tipagem do 2° param é para
 
-  if (Number(req.params.id) === 9999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: {
-      default: 'Cidade não localizada'
-    }
-  });
+  const id = req.params.id;
+  const result = await CidadesProvider.getByID(id!);
 
-  return res.status(StatusCodes.ACCEPTED).json({
-    id: req.params.id,
-    nome: 'Angra dos Reis'
-  });
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.ACCEPTED).json(result);
+
 };

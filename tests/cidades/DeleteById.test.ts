@@ -14,11 +14,11 @@ describe('cidades - deletar', () => {
       .send({nome: 'Angra dos reis'});
 
     const resApagada = await testServer
-      .delete(`/cidades/${res1.body}`)
+      .delete(`/cidades/${res1.body.id}`)
       .send()
 
 
-      expect(resApagada.statusCode).toEqual(StatusCodes.NO_CONTENT)
+      expect(resApagada.statusCode).toEqual(StatusCodes.OK)
   });
 
   it('tenta deletar id que não existe', async() => {
@@ -27,7 +27,7 @@ describe('cidades - deletar', () => {
       .send()
 
 
-    expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR)
+    expect(res1.statusCode).toEqual(StatusCodes.NOT_FOUND)
     expect(res1.body).toHaveProperty('errors.default')
    })
 

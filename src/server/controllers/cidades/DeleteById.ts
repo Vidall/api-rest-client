@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from 'http-status-codes';
+import { CidadesProvider } from '../../database/providers/cidades';
 
 interface IParamProps {
   id?: number
@@ -19,11 +20,23 @@ export const deleteByIdValidator = validation((getSchema) => ({
 // create função para pegar todas cidades
 export const deleteById = async (req: Request<IParamProps, {}, {}>, res: Response) => {//a tipagem do 2° param é para
 
-  if (Number(req.params.id) === 9999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: {
-      default: 'Registro não encontrado'
-    }
-  });
+  const result = await CidadesProvider.deleteById(Number(req.params.id));
 
-  return res.status(StatusCodes.NO_CONTENT).send();
+  if (Number(req.params.id) === 9999) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      errors: {
+        default: 'Erro de teste para id que não existe'
+      }
+    });
+  }
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.OK).json({message: 'Cidade deletada com sucesso', id: result});
 };

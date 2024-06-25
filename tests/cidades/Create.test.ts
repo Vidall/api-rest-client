@@ -16,7 +16,7 @@ describe('cidade - create', () => {
 
 
     expect(res1.statusCode).toEqual(StatusCodes.CREATED);
-    expect(typeof res1.body).toEqual("number");
+    expect(typeof res1.body).toEqual("object");
 
   });
 

@@ -2,13 +2,11 @@ import { Request, Response } from 'express';
 // Biblioteza yup para validações
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
+import { CidadesProvider } from '../../database/providers/cidades';
+import { IQueryProps } from '../../database/models';
 import { StatusCodes } from 'http-status-codes';
-
-interface IQueryProps {
-  page?: number,
-  limit?: number,
-  filter?: string
-}
+import { count } from '../../database/providers/cidades/Count';
+import { cidadesControllers } from '.';
 
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
@@ -16,6 +14,7 @@ export const getAllValidator = validation((getSchema) => ({
   query: getSchema<IQueryProps>(yup.object().shape({
     page: yup.number().optional().moreThan(0),
     limit: yup.number().optional().moreThan(0),
+    id: yup.number().integer().optional().default(0),
     filter: yup.string().optional()
   })),
 }));
@@ -23,11 +22,28 @@ export const getAllValidator = validation((getSchema) => ({
 // create função para pegar todas cidades
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {//a tipagem do 2° param é para
 
-  res.setHeader('access-control-expose-headers', 'x-total-count');
-  res.setHeader('x-total-count', 1);
+  const page = req.query.page;
+  const limit = req.query.limit;
+  const filter = req.query.filter;
+  const id = Number(req.query.id);
 
-  return res.status(StatusCodes.OK).json({
-    id: 1,
-    nome: 'Angra dso Reis'
-  });
+  const result = await CidadesProvider.getAll(page || 1, limit || 7, filter || '', id || 0);
+  const count = await CidadesProvider.count(filter);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  } else if ( count instanceof Error ) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {default: count.message}
+    });
+  }
+
+  res.setHeader('access-control-expose-headers', 'x-total-count');
+  res.setHeader('x-total-count', count);
+
+  return res.status(StatusCodes.OK).json(result);
 };
