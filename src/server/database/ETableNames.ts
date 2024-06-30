@@ -1,4 +1,6 @@
+/*eslint-disable*/
+
 export enum ETableNames {
-  /*eslint-disable-next-line*/
-  cidade = 'cidade'
+  cidade = 'cidade',
+  pessoa = 'pessoa'
 }
