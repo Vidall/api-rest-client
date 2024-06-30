@@ -11,11 +11,11 @@ const startServer = () => {
 if (process.env.IS_LOCALHOST !== 'true') {
   knex.migrate.latest()
     .then(() => {
-      startServer();
+      knex.seed.run()
+        .then(() => startServer())
+        .catch(console.log);
     })
     .catch(console.log);
 } else {
   startServer();
-}
-
-;
+};

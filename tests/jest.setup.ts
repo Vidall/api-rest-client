@@ -6,6 +6,7 @@ import { knex } from '../src/server/database/knex';
 /*eslint-disable no-undef*/
 beforeAll(async () => {
   await knex.migrate.latest();
+  await knex.seed.run();
 });
 
 afterAll(async () => {
