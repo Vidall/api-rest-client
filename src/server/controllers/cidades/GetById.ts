@@ -31,6 +31,8 @@ export const getById = async (req: Request<IParamProps, {}, {}>, res: Response) 
     });
   }
 
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+
   return res.status(StatusCodes.ACCEPTED).json(result);
 
 };

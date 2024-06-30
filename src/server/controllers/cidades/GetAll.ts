@@ -5,8 +5,6 @@ import { validation } from '../../shared/middleware';
 import { CidadesProvider } from '../../database/providers/cidades';
 import { IQueryProps } from '../../database/models';
 import { StatusCodes } from 'http-status-codes';
-import { count } from '../../database/providers/cidades/Count';
-import { cidadesControllers } from '.';
 
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/
 /*schema de validação com a lib yup*/
@@ -44,6 +42,7 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
 
   res.setHeader('access-control-expose-headers', 'x-total-count');
   res.setHeader('x-total-count', count);
+  // res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
 
   return res.status(StatusCodes.OK).json(result);
 };
