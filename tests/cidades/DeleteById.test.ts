@@ -14,7 +14,7 @@ describe('cidades - deletar', () => {
       .send({nome: 'Angra dos reis'});
 
     const resApagada = await testServer
-      .delete(`/cidades/${res1.body.id}`)
+      .delete(`/cidades/${res1.body}`)
       .send()
 
 

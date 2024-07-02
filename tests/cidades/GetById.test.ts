@@ -16,7 +16,7 @@ describe('cidade - pegar cidade por id', () => {
 
 
     const resBuscada = await testServer
-      .get(`/cidades/${res1.body.id}`)
+      .get(`/cidades/${res1.body}`)
       .send()
 
 

@@ -4,7 +4,7 @@ import { ETableNames } from '../ETableNames';
 export async function up(knex: Knex): Promise<void> {
   return knex
     .schema
-    .createTable(ETableNames.pessoa, table => {
+    .createTable(ETableNames.aluno, table => {
       table.bigIncrements('id').primary().index();
       table.string('nome_completo').index().notNullable();
       table.string('email').unique();
@@ -18,16 +18,16 @@ export async function up(knex: Knex): Promise<void> {
         .onDelete('RESTRICT');
     })
     .then(() => {
-      console.log(`Created table ${ETableNames.pessoa}`);
+      console.log(`Created table ${ETableNames.aluno}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex
     .schema
-    .dropTable(ETableNames.pessoa)
+    .dropTable(ETableNames.aluno)
     .then(() => {
-      console.log(`Deleted table ${ETableNames.pessoa}`);
+      console.log(`Deleted table ${ETableNames.aluno}`);
     });
 }
 

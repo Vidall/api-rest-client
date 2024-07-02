@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
 import { CidadesProvider } from '../../database/providers/cidades';
-import { IQueryProps } from '../../database/models';
+import { IQueryProps } from '../../database/models/Common';
 import { StatusCodes } from 'http-status-codes';
 
 /*yup.Schema vincula a interface ICidade com o bodyValidation*/

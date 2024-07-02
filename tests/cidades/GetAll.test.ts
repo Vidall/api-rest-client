@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import {testServer} from '../jest.setup';
 
-
 /*eslint-disable */
 
 describe('cidades - pegar todas', () => {

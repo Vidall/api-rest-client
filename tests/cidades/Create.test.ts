@@ -5,32 +5,25 @@ import { testServer } from '../jest.setup';
 
 describe('cidade - create', () => {
 
-
-
   it('criar registro', async () => {
-
 
     const res1 = await testServer
       .post('/cidades')
       .send({nome: 'angra dos reis'});
 
-
-    expect(res1.statusCode).toEqual(StatusCodes.CREATED);
-    expect(typeof res1.body).toEqual("object");
+    expect(res1.statusCode).toEqual(StatusCodes.ACCEPTED);
+    expect(typeof res1.body).toEqual('number');
 
   });
 
-
   it('tenta criar nome curto', async () => {
-
 
     const res1 = await testServer
       .post('/cidades')
       .send({nome: 'ca'});
 
-
     expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res1.body).toHaveProperty("errors.body.nome");
+    expect(res1.body).toHaveProperty('errors.body.nome');
 
   });
 });

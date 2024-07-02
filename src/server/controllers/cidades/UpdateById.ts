@@ -36,7 +36,7 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
   const result = await CidadesProvider.updateByid(req.params.id, req.body);
 
   if (result instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: result.message
       }
